@@ -67,9 +67,9 @@ print(Schema:getState())
 An abstraction layer over `ESM` built for managing per-player schemas.
 
 - Generates a profile schema via `newProfileSchema(player)`
-- Supports **atomized** layers (e.g., `Inventory`, `Settings`)
+- Supports **extended** layers (e.g., `Inventory`, `Settings`)
 - Allows data updates by key, category, or ID
-- Provides `:ovwrAtomized()` and `:ovwrCompacted()` APIs
+- Provides `:ovwrExtended()` and `:ovwrCompacted()` APIs
 
 #### 🔧 Example
 
@@ -122,7 +122,7 @@ ProfileSchema:saveSchema()
 
 - Declarative schema definitions
 - Extendable metadata injection
-- Atomized vs. compacted state layers
+- Extended vs. compacted state layers
 - Roblox-native API integrations (e.g. `HTTPService:GenerateGUID`)
 - Developer-friendly override system
 
