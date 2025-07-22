@@ -19,25 +19,34 @@ A strict and flexible state manager for structured data. Includes:
 #### 🔧 Example
 
 ```lua
-local Schema = require(ESM).schema({
+local Schema = path.to.ESM.schema({
     Secondary = {
         test1 = "example",
         test2 = "example"
     }
-})
+}) 
+if not Schema then return end
+        
 
-Schema:pushStateData("new test1", "test1", "Secondary")
+Schema:pushStateData("new test1 example", "test1", "Secondary")
+Schema:pushStateData("new test3 example", "test3", "Secondary")
+
 Schema:pushMetaData("__newindex", function<K, V>(...: { [K]: V } & K & V)
     rawset(...)
 end)
 
-Schema:ovwrOnStateChanged(function(prev, key, value)
+
+Schema:ovwrOnStateChanged(function<P, K, V>(prev: P, key: K, value: V): (P, K, V)
     print(prev, key, value)
     return prev, key, value
 end)
 
-Schema:lockSchema()
+Schema:ovwrOnCalled(function()
+    print("!CALLED...")
+end)
 
+
+Schema:lockSchema() -- UNCHANGEABLE...
 print(Schema:getState())
 ```
 
@@ -55,22 +64,38 @@ An abstraction layer over `ESM` built for managing per-player schemas.
 #### 🔧 Example
 
 ```lua
-local dataractiveManager = require(Dataractive)
 local ProfileSchema = dataractiveManager.newProfileSchema(player)
 if not ProfileSchema then return end
+
 
 local AtomizedSchema = ProfileSchema:ovwrAtomized()
 AtomizedSchema.coins:pushStateData(999)
 AtomizedSchema.Settings:pushStateData(false, "MusicEnabled")
-AtomizedSchema.Inventory:pushStateData({
-    Name = "test",
-    Level = 0,
-    Rarity = "test",
-    Equipped = false
-}, HTTPService:GenerateGUID(false), "Pets")
+AtomizedSchema.isFirstTime:pushStateData(false)
 
--- Finalize schema state
+AtomizedSchema.Inventory:pushStateData(
+    {
+        Name     = "test",
+        Level    = 0,
+        Rarity   = "test",
+        Equipped = false
+    },
+    HTTPService:GenerateGUID(false),
+    "Pets"
+)
+
+AtomizedSchema.Achievements:pushStateData(
+    {
+        Name 		= "test",
+        Description = "test",
+        Completed   = true
+    },
+    "test"
+)
+
+
 ProfileSchema = AtomizedSchema:ovwrCompacted()
+ProfileSchema:saveSchema()
 ```
 
 ---
