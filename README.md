@@ -49,14 +49,13 @@ end)
 Schema:lockSchema() -- UNCHANGEABLE...
 print(Schema:getState())
 
--- OUTPUT:
---[[
-    {
-        test1 = "new test1 example",
-        test2 = "example",
-        test3 = "new test3 example"
-    }
-]]
+
+PRINTS:
+{
+    test1 = "new test1 example",
+    test2 = "example",
+    test3 = "new test3 example"
+}
 ```
 
 ---
