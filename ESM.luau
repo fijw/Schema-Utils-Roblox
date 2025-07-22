@@ -104,8 +104,8 @@ function ExtendedSchemaManager.schema<T>(
     
 	setmetatable(self,
 		{
-        	__call  = calledCallback,
-        	__index = ProtoSchema
+        		__call  = calledCallback,
+        		__index = ProtoSchema
 		} :: ProtoSchemaType<T>
 	)
     
@@ -144,7 +144,7 @@ function ProtoSchema:pushStateData<V, K, P...>(value: V, key: K?, ...: P...)
 	end
 
 	if key then
-        prev           = pushScope[key]
+        	prev           = pushScope[key]
 		pushScope[key] = value
 
 		if not self.onStateChangedFN then return end
@@ -153,7 +153,7 @@ function ProtoSchema:pushStateData<V, K, P...>(value: V, key: K?, ...: P...)
 		return
 	end
 
-    prev       = self:getState()
+    	prev       = self:getState()
 	self.state = value :: any
 
 	if not self.onStateChangedFN then return end
