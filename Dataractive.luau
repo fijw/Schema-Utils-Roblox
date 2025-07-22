@@ -25,7 +25,7 @@
 
         ExtendedSchema.Achievements:pushStateData(
             {
-                Name 		= "test",
+                Name 	    = "test",
                 Description = "test",
                 Completed   = true
             },
@@ -42,7 +42,7 @@
 
 --[[ @VARIABLES ]]
 
-local ServerStorage 		= game:GetService("ServerStorage")
+local ServerStorage 	    = game:GetService("ServerStorage")
 local profileStoreManager   = require(ServerStorage.Private.ProfileStore)
 local extendedSchemaManager = require(ServerStorage.Private.ESM)
 
@@ -61,8 +61,8 @@ local SCHEMA_TEMPLATE: PrimitiveProtoSchema = {
 	},
 
 	Settings = {
-		SoundEnabled 		 = true,
-		MusicEnabled 		 = true,
+		SoundEnabled 	     = true,
+		MusicEnabled 	     = true,
 		NotificationsEnabled = true
 	},
 
@@ -74,7 +74,7 @@ local PROFILES_STORAGE = profileStoreManager.New("Profiles", SCHEMA_TEMPLATE)
 
 --[[ @TYPES ]]
 
-type Profile<T> 	   = profileStoreManager.Profile<T>
+type Profile<T>        = profileStoreManager.Profile<T>
 type ExtendedSchema<T> = extendedSchemaManager.ExtendedSchema<T>
 
 
@@ -113,23 +113,23 @@ type AchievementsSchema = {
 
 
 type PrimitiveProtoSchema = {
-    coins:        number,
+	coins:        number,
 	Inventory:    InventorySchema,
 	Settings:     SettingsSchema,
 	Achievements: AchievementsSchema,
 	isFirstTime:  boolean,
 
-    Profile: Profile<PrimitiveProtoSchema>?
+    	Profile: Profile<PrimitiveProtoSchema>?
 } & ProtoSchema
 
 export type AdvancedProtoSchema = {
-    coins:        ExtendedSchema<number>,
+	coins:        ExtendedSchema<number>,
 	Inventory:    ExtendedSchema<InventorySchema>,
 	Settings:     ExtendedSchema<SettingsSchema>,
 	Achievements: ExtendedSchema<AchievementsSchema>,
 	isFirstTime:  ExtendedSchema<boolean>,
 
-    Profile: Profile<AdvancedProtoSchema>?
+	Profile: Profile<AdvancedProtoSchema>?
 } & ProtoSchema
 
 
@@ -144,8 +144,8 @@ type ProtoSchema = {
 
 --[[
 	@usage Creates a new schema for a player's data.
-    @param      player    Player    The player to create the schema for.
-    @return     PrimitiveProtoSchema?
+	@param      player    Player    The player to create the schema for.
+	@return     PrimitiveProtoSchema?
 ]]
 function Dataractive.newProfileSchema(player: Player): PrimitiveProtoSchema?
 	local Profile = PROFILES_STORAGE:StartSessionAsync(`{player.UserId}`, {})
@@ -154,7 +154,7 @@ function Dataractive.newProfileSchema(player: Player): PrimitiveProtoSchema?
 	Profile:Reconcile()
 	Profile:AddUserId(player.UserId)
 
-	local MetaProto 	 = Proto
+	local MetaProto      = Proto
 	MetaProto["Profile"] = Profile
 
 	setmetatable(Profile.Data :: PrimitiveProtoSchema, { __index = MetaProto })
@@ -170,7 +170,7 @@ function Dataractive.fetchProfileSchema(player: Player): PrimitiveProtoSchema?
 	local Profile = PROFILES_STORAGE:GetAsync(`{player.UserId}`)
 	if not Profile then return end
 
-	local MetaProto 	 = Proto
+	local MetaProto      = Proto
 	MetaProto["Profile"] = Profile
 
 	setmetatable(Profile.Data :: PrimitiveProtoSchema, { __index = MetaProto })
@@ -183,8 +183,8 @@ end
 function Proto:ovwrExtended(): AdvancedProtoSchema
 	local TempSchema = {
 		coins 	     = extendedSchemaManager.schema(self.coins),
-		Inventory 	 = extendedSchemaManager.schema(self.Inventory),
-		Settings	 = extendedSchemaManager.schema(self.Settings),
+		Inventory    = extendedSchemaManager.schema(self.Inventory),
+		Settings     = extendedSchemaManager.schema(self.Settings),
 		Achievements = extendedSchemaManager.schema(self.Achievements),
 		isFirstTime  = extendedSchemaManager.schema(self.isFirstTime),
 
@@ -197,7 +197,7 @@ end
 
 function Proto:ovwrCompacted(): PrimitiveProtoSchema
 	local TempSchema = {
-		coins 		 = self.coins:getState(),
+		coins 	     = self.coins:getState(),
 		Inventory    = self.Inventory:getState(),
 		Settings     = self.Settings:getState(),
 		Achievements = self.Achievements:getState(),
