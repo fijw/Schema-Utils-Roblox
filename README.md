@@ -86,7 +86,7 @@ AtomizedSchema.Inventory:pushStateData(
 
 AtomizedSchema.Achievements:pushStateData(
     {
-        Name 		= "test",
+        Name 	= "test",
         Description = "test",
         Completed   = true
     },
