@@ -78,12 +78,12 @@ local ProfileSchema = dataractiveManager.newProfileSchema(player)
 if not ProfileSchema then return end
 
 
-local AtomizedSchema = ProfileSchema:ovwrAtomized()
-AtomizedSchema.coins:pushStateData(999)
-AtomizedSchema.Settings:pushStateData(false, "MusicEnabled")
-AtomizedSchema.isFirstTime:pushStateData(false)
+local ExtendedSchema = ProfileSchema:ovwrExtended()
+ExtendedSchema.coins:pushStateData(999)
+ExtendedSchema.Settings:pushStateData(false, "MusicEnabled")
+ExtendedSchema.isFirstTime:pushStateData(false)
 
-AtomizedSchema.Inventory:pushStateData(
+ExtendedSchema.Inventory:pushStateData(
     {
         Name     = "test",
         Level    = 0,
@@ -94,7 +94,7 @@ AtomizedSchema.Inventory:pushStateData(
     "Pets"
 )
 
-AtomizedSchema.Achievements:pushStateData(
+ExtendedSchema.Achievements:pushStateData(
     {
         Name 	    = "test",
         Description = "test",
@@ -104,7 +104,7 @@ AtomizedSchema.Achievements:pushStateData(
 )
 
 
-ProfileSchema = AtomizedSchema:ovwrCompacted()
+ProfileSchema = ExtendedSchema:ovwrCompacted()
 ProfileSchema:saveSchema()
 ```
 
