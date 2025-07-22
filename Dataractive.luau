@@ -7,12 +7,12 @@
         if not ProfileSchema then return end
 
 
-        local AtomizedSchema = ProfileSchema:ovwrAtomized()
-        AtomizedSchema.coins:pushStateData(999)
-        AtomizedSchema.Settings:pushStateData(false, "MusicEnabled")
-        AtomizedSchema.isFirstTime:pushStateData(false)
+        local ExtendedSchema = ProfileSchema:ovwrExtended()
+        ExtendedSchema.coins:pushStateData(999)
+        ExtendedSchema.Settings:pushStateData(false, "MusicEnabled")
+        ExtendedSchema.isFirstTime:pushStateData(false)
 
-        AtomizedSchema.Inventory:pushStateData(
+        ExtendedSchema.Inventory:pushStateData(
             {
                 Name     = "test",
                 Level    = 0,
@@ -23,7 +23,7 @@
             "Pets"
         )
 
-        AtomizedSchema.Achievements:pushStateData(
+        ExtendedSchema.Achievements:pushStateData(
             {
                 Name 		= "test",
                 Description = "test",
@@ -33,7 +33,7 @@
         )
 
 
-        ProfileSchema = AtomizedSchema:ovwrCompacted()
+        ProfileSchema = ExtendedSchema:ovwrCompacted()
         ProfileSchema:saveSchema()
     ```
 ]]
@@ -134,7 +134,7 @@ export type AdvancedProtoSchema = {
 
 
 type ProtoSchema = {
-	ovwrAtomized:  (self: PrimitiveProtoSchema) -> (AdvancedProtoSchema),
+	ovwrExtended:  (self: PrimitiveProtoSchema) -> (AdvancedProtoSchema),
 	ovwrCompacted: (self: AdvancedProtoSchema) -> (PrimitiveProtoSchema),
 	saveSchema:    (self: PrimitiveProtoSchema) -> ()
 }
@@ -180,7 +180,7 @@ end
 
 --[[ @MANIPULATIONS ]]
 
-function Proto:ovwrAtomized(): AdvancedProtoSchema
+function Proto:ovwrExtended(): AdvancedProtoSchema
 	local TempSchema = {
 		coins 	     = extendedSchemaManager.schema(self.coins),
 		Inventory 	 = extendedSchemaManager.schema(self.Inventory),
