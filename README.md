@@ -50,8 +50,7 @@ Schema:lockSchema() -- UNCHANGEABLE...
 print(Schema:getState())
 
 
--- OUTPUT:
---[[
+--[[ @OUTPUT
     {
         test1 = "new test1 example",
         test2 = "example",
